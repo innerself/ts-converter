@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timestamp converter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+  <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+  <div class="ts-row">timestamp:&nbsp;{{ content['timestamp'] }}</div>
+</div>
+<div class="content">
+  {% for zone, dt in content['result'].items() %}
+    <div class="dt-row">
+      <div class="zone-name">{{ zone }}:&nbsp;</div>
+      {{ dt }}</div>
+  {% endfor %}
+</div>
+<div class="footer"></div>
+</body>
+</html>

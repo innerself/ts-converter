@@ -6,3 +6,5 @@ services:
     restart: always
     ports:
       - "${PORT:-8000}:8000"
+    volumes:
+      - "./static:/app/static"

@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ts-converter"
+version = "0.1.0"
+description = ""
+authors = ["Sergey Petrin"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.110.0"
+uvicorn = "^0.28.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

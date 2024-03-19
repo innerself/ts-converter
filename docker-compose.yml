@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  ts-converter:
+    image: docker.io/spetrin/ts-converter:latest
+    restart: always
+    ports:
+      - "${PORT:-8000}:8000"

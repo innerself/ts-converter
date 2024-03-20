@@ -14,7 +14,6 @@ body {
     font-style: normal;
 }
 
-
 .header {
     grid-row: 1;
     display: flex;
@@ -52,13 +51,25 @@ body {
 .dt-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-
     font-size: xxx-large;
-    color: #F5F4F6;
 }
 
 .zone-name {
     display: flex;
     justify-content: flex-end;
     color: #9B9FB1;
+}
+
+.time-value {
+    color: #F5F4F6;
+}
+
+.time-value::selection {
+    background-color: #866756;
+}
+
+.ts-row *::selection,
+.zone-name::selection,
+.zone-name *::selection {
+    background-color: #F5F4F6;
 }

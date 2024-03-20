@@ -11,13 +11,19 @@
 </head>
 <body>
 <div class="header">
-  <div class="ts-row">timestamp:&nbsp;{{ content['timestamp'] }}</div>
+  <div class="ts-row">
+    <div class="timestamp-word">timestamp:</div>
+    <div class="timestamp-value">{{ content['timestamp'] }}</div>
+    <div class="empty-cell"></div>
+  </div>
 </div>
 <div class="content">
   {% for zone, dt in content['result'].items() %}
     <div class="dt-row">
-      <div class="zone-name">{{ zone }}:&nbsp;</div>
-      {{ dt }}</div>
+      <div class="zone-name">{{ zone }}:</div>
+      <div class="time-value">{{ dt }}</div>
+      <div class="empty-cell"></div>
+    </div>
   {% endfor %}
 </div>
 <div class="footer"></div>

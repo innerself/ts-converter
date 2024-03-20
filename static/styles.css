@@ -31,17 +31,34 @@ body {
 }
 
 .ts-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
     font-size: x-large;
     color: #9B9FB1;
     margin-bottom: 5rem;
 }
 
+.timestamp-word {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.timestamp-value {
+    display: flex;
+    justify-content: center;
+}
+
 .dt-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
     font-size: xxx-large;
     color: #F5F4F6;
 }
 
 .zone-name {
-    display: inline-block;
+    display: flex;
+    justify-content: flex-end;
     color: #9B9FB1;
 }

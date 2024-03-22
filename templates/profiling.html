@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profiling checks generator</title>
+  <link href="{{ request.app.url_path_for('static', path='/profiling.css') }}" rel="stylesheet">
+</head>
+<body>
+<button id="button-next">NEXT</button>
+<button id="button-reset">RESET</button>
+<div id="profiling-rows"></div>
+<script src="{{ request.app.url_path_for('static', path='/profiling.js') }}"></script>
+</body>
+</html>

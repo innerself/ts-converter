@@ -47,5 +47,13 @@ async def root(request: Request, content: Annotated[dict, Depends(parse_ts)]):
 
 
 @app.get('/api/ts/', response_class=CustomJSONResponse)
+@app.get('/profiling/', response_class=HTMLResponse)
+async def profiling(request: Request):
+    current_list = request.cookies.get('profiling_list', [])
+    return templates.TemplateResponse(
+        request=request, name='profiling.html', context={'current_list': current_list}
+    )
+
+
 async def api_root(content: Annotated[dict, Depends(parse_ts)]):
     return content

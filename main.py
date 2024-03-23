@@ -39,21 +39,18 @@ async def parse_ts(ts: int | None = None,
 
 
 @app.get("/", response_class=HTMLResponse)
-@app.get("/ts/", response_class=HTMLResponse)
+@app.get("/timestamp/", response_class=HTMLResponse)
 async def root(request: Request, content: Annotated[dict, Depends(parse_ts)]):
     return templates.TemplateResponse(
         request=request, name='index.html', context={'content': content},
     )
 
 
-@app.get('/api/ts/', response_class=CustomJSONResponse)
 @app.get('/profiling/', response_class=HTMLResponse)
 async def profiling(request: Request):
-    current_list = request.cookies.get('profiling_list', [])
-    return templates.TemplateResponse(
-        request=request, name='profiling.html', context={'current_list': current_list}
-    )
+    return templates.TemplateResponse(request=request, name='profiling.html')
 
 
+@app.get('/api/timestamp/', response_class=CustomJSONResponse)
 async def api_root(content: Annotated[dict, Depends(parse_ts)]):
     return content

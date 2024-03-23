@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Profiling checks generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
   <link href="{{ request.app.url_path_for('static', path='/profiling.css') }}" rel="stylesheet">
 </head>
 <body>
-<button id="button-next">NEXT</button>
-<button id="button-reset">RESET</button>
-<div id="profiling-rows"></div>
+<div class="header">
+  <button id="button-next">START</button>
+  <button id="button-reset">RESET</button>
+</div>
+<div id="profiling-rows" class="main"></div>
 <script src="{{ request.app.url_path_for('static', path='/profiling.js') }}"></script>
 </body>
 </html>

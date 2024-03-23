@@ -1,4 +1,5 @@
-let currentList = localStorage.getItem('%%storage_list_name%%');
+const storageListName = '%%storage_list_name%%'
+let currentList = localStorage.getItem(storageListName);
 currentList = currentList ? JSON.parse(currentList) : [];
 
 let indentation = 4;
@@ -59,7 +60,7 @@ async function addListElement() {
     const rowDiv = await addRow(rowText, currentLine);
     await copyCodeText(rowDiv.getElementsByClassName('row-pre')[0])
     shine(rowDiv.getElementsByClassName('row-right-wing')[0])
-    localStorage.setItem('currentList', JSON.stringify(currentList));
+    localStorage.setItem(storageListName, JSON.stringify(currentList));
 }
 
 async function resetList() {

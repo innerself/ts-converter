@@ -89,6 +89,7 @@ async def profiling_js(request: Request):
     base_js = Path(__file__).parent.joinpath('static', 'profdebug.js')
     with open(base_js) as init_file:
         code = init_file.read()
+        code = code.replace("'%%storage_list_name%%'", 'profilingList')
         code = code.replace("'%%first_row_text%%'", first_row_text)
         code = code.replace("'%%consequent_row_text%%'", consequent_row_text)
 
@@ -107,15 +108,12 @@ async def debugging_js(request: Request):
         {main_text.removeprefix(prefixes[0]).removeprefix(prefixes[1])}
     """)
 
-    consequent_row_text = dedent(f"""
-        `logger.debug('${{currentLine}}${{`-${{currentLine}}`.repeat(13)}}-${{currentLine}}')`
-    """)
-
     base_js = Path(__file__).parent.joinpath('static', 'profdebug.js')
     with open(base_js) as init_file:
         code = init_file.read()
+        code = code.replace("'%%storage_list_name%%'", 'debuggingList')
         code = code.replace("'%%first_row_text%%'", first_row_text)
-        code = code.replace("'%%consequent_row_text%%'", consequent_row_text)
+        code = code.replace("'%%consequent_row_text%%'", main_text)
 
     return code
 

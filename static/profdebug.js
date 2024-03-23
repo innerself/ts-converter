@@ -1,4 +1,4 @@
-let currentList = localStorage.getItem('currentList');
+let currentList = localStorage.getItem('%%storage_list_name%%');
 currentList = currentList ? JSON.parse(currentList) : [];
 
 let indentation = 4;

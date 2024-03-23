@@ -5,20 +5,11 @@ let indentation = 4;
 
 const buttonNext = document.getElementById('button-next');
 const buttonReset = document.getElementById('button-reset');
-const profilingRows = document.getElementById('profiling-rows');
+const profilingRows = document.getElementById('profdebug');
 
-const firstRowText = () => (
-    `import time
-from loguru import logger
-logger.debug('****************************************')
-pf_t1 = time.monotonic()`
-);
+const firstRowText = (currentLine) => ('%%first_row_text%%');
 
-const consequentRowText = (currentLine) => (
-    `pf_t${currentLine} = time.monotonic()
-logger.debug(f'Time from previous: {pf_t${currentLine} - pf_t${currentLine - 1}}')
-logger.debug(f'Time from start: {pf_t${currentLine} - pf_t1}')`
-);
+const consequentRowText = (currentLine) => ('%%consequent_row_text%%');
 
 
 async function addRow(rowText, lineNumber) {
@@ -62,7 +53,7 @@ async function addRow(rowText, lineNumber) {
 
 async function addListElement() {
     const currentLine = currentList.length > 0 ? currentList.length + 1 : 1
-    const rowText = currentLine === 1 ? firstRowText() : consequentRowText(currentLine)
+    const rowText = currentLine === 1 ? firstRowText(currentLine) : consequentRowText(currentLine)
 
     currentList.push(rowText);
     const rowDiv = await addRow(rowText, currentLine);

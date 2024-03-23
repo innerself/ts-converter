@@ -1,5 +1,7 @@
 import datetime
 import json
+from pathlib import Path
+from textwrap import dedent
 from typing import Any, Annotated
 from zoneinfo import ZoneInfo
 
@@ -7,6 +9,7 @@ from fastapi import FastAPI, Query, Response, Depends, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.responses import PlainTextResponse
 
 app = FastAPI()
 
@@ -48,7 +51,73 @@ async def root(request: Request, content: Annotated[dict, Depends(parse_ts)]):
 
 @app.get('/profiling/', response_class=HTMLResponse)
 async def profiling(request: Request):
-    return templates.TemplateResponse(request=request, name='profiling.html')
+    css_path = request.app.url_path_for('static', path='/profdebug.css')
+    js_path = '/static-gen/profiling.js'
+    return templates.TemplateResponse(
+        request=request,
+        name='profdebug.html',
+        context={'css_path': css_path, 'js_path': js_path},
+    )
+
+
+@app.get('/debugging/', response_class=HTMLResponse)
+async def debugging(request: Request):
+    css_path = request.app.url_path_for('static', path='/profdebug.css')
+    js_path = '/static-gen/debugging.js'
+    return templates.TemplateResponse(
+        request=request,
+        name='profdebug.html',
+        context={'css_path': css_path, 'js_path': js_path},
+    )
+
+
+@app.get('/static-gen/profiling.js', response_class=PlainTextResponse)
+async def profiling_js(request: Request):
+    first_row_text = dedent("""
+        `import time
+        from loguru import logger
+        logger.debug('****************************************')
+        pf_t1 = time.monotonic()`
+    """)
+
+    consequent_row_text = dedent("""
+        `pf_t${currentLine} = time.monotonic()
+        logger.debug(f'Time from previous: {pf_t${currentLine} - pf_t${currentLine - 1} }')
+        logger.debug(f'Time from start: {pf_t${currentLine} - pf_t1}')`
+    """)
+
+    base_js = Path(__file__).parent.joinpath('static', 'profdebug.js')
+    with open(base_js) as init_file:
+        code = init_file.read()
+        code = code.replace("'%%first_row_text%%'", first_row_text)
+        code = code.replace("'%%consequent_row_text%%'", consequent_row_text)
+
+    return code
+
+
+@app.get('/static-gen/debugging.js', response_class=PlainTextResponse)
+async def debugging_js(request: Request):
+    main_text = dedent(f"""
+        `logger.debug('${{currentLine}}${{`-${{currentLine}}`.repeat(13)}}-${{currentLine}}')`
+    """)
+
+    prefixes = '\n', '`'
+    first_row_text = dedent(f"""
+        `from loguru import logger
+        {main_text.removeprefix(prefixes[0]).removeprefix(prefixes[1])}
+    """)
+
+    consequent_row_text = dedent(f"""
+        `logger.debug('${{currentLine}}${{`-${{currentLine}}`.repeat(13)}}-${{currentLine}}')`
+    """)
+
+    base_js = Path(__file__).parent.joinpath('static', 'profdebug.js')
+    with open(base_js) as init_file:
+        code = init_file.read()
+        code = code.replace("'%%first_row_text%%'", first_row_text)
+        code = code.replace("'%%consequent_row_text%%'", consequent_row_text)
+
+    return code
 
 
 @app.get('/api/timestamp/', response_class=CustomJSONResponse)

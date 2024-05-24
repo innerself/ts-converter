@@ -76,13 +76,14 @@ async def profiling_js(request: Request):
     first_row_text = dedent("""
         `import time
         from loguru import logger
-        logger.debug('****************************************')
+        logger.debug('========================================')
         pf_t1 = time.monotonic()`
     """)
 
     consequent_row_text = dedent("""
         `pf_t${currentLine} = time.monotonic()
-        logger.debug(f'Time from previous: {pf_t${currentLine} - pf_t${currentLine - 1}}')
+        logger.debug('========== pf_t${currentLine - 1} ==========')
+        logger.debug(f'Time from pf_t${currentLine - 1}: {pf_t${currentLine} - pf_t${currentLine - 1}}')
         logger.debug(f'Time from start: {pf_t${currentLine} - pf_t1}')`
     """)
 

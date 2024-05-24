@@ -82,7 +82,7 @@ async def profiling_js(request: Request):
 
     consequent_row_text = dedent("""
         `pf_t${currentLine} = time.monotonic()
-        logger.debug('========== pf_t${currentLine - 1} ==========')
+        logger.debug('========== pf_t${currentLine} ==========')
         logger.debug(f'Time from pf_t${currentLine - 1}: {pf_t${currentLine} - pf_t${currentLine - 1}}')
         logger.debug(f'Time from start: {pf_t${currentLine} - pf_t1}')`
     """)
